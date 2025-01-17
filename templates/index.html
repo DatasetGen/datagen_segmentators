@@ -4,6 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload and View Results</title>
+    <style>
+        canvas {
+            max-width: 600px;
+            height: auto;
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
     <h1>Upload Image for Segmentation</h1>
@@ -16,13 +23,13 @@
 
     <div id="result-container">
         <h2>Segmentation Results</h2>
-        <div id="bounding-boxes">
-            <h3>Bounding Boxes:</h3>
-            <ul id="bbox-list"></ul>
+        <div>
+            <h3>Original Image with Bounding Boxes</h3>
+            <canvas id="bounding-box-canvas"></canvas>
         </div>
-        <div id="segmentations">
-            <h3>Segmentations:</h3>
-            <ul id="segmentation-list"></ul>
+        <div>
+            <h3>Original Image with Segmentations</h3>
+            <canvas id="segmentation-canvas"></canvas>
         </div>
     </div>
 
@@ -51,7 +58,7 @@
             });
 
             const data = await response.json();
-            displayResults(data);
+            displayResults(base64Image, data);
         }
 
         function convertToBase64(file) {
@@ -63,24 +70,44 @@
             });
         }
 
-        function displayResults(data) {
-            const bboxList = document.getElementById("bbox-list");
-            const segList = document.getElementById("segmentation-list");
+        function displayResults(base64Image, data) {
+            const bboxCanvas = document.getElementById("bounding-box-canvas");
+            const segCanvas = document.getElementById("segmentation-canvas");
+            const bboxCtx = bboxCanvas.getContext("2d");
+            const segCtx = segCanvas.getContext("2d");
 
-            bboxList.innerHTML = '';
-            segList.innerHTML = '';
+            const img = new Image();
+            img.src = `data:image/jpeg;base64,${base64Image}`;
+            img.onload = () => {
+                // Set canvas dimensions to match the image
+                bboxCanvas.width = segCanvas.width = img.width;
+                bboxCanvas.height = segCanvas.height = img.height;
 
-            data.bounding_boxes.forEach(bbox => {
-                const li = document.createElement('li');
-                li.textContent = `x0: ${bbox.x_0}, y0: ${bbox.y_0}, x1: ${bbox.x_1}, y1: ${bbox.y_1}`;
-                bboxList.appendChild(li);
-            });
+                // Draw the image on both canvases
+                bboxCtx.drawImage(img, 0, 0);
+                segCtx.drawImage(img, 0, 0);
 
-            data.segmentations.forEach(seg => {
-                const li = document.createElement('li');
-                li.textContent = `Points: ${JSON.stringify(seg.points)}`;
-                segList.appendChild(li);
-            });
+                // Draw bounding boxes on the first canvas
+                bboxCtx.strokeStyle = "red";
+                bboxCtx.lineWidth = 2;
+                data.bounding_boxes.forEach(bbox => {
+                    bboxCtx.strokeRect(bbox.x_0, bbox.y_0, bbox.x_1 - bbox.x_0, bbox.y_1 - bbox.y_0);
+                });
+
+                // Draw segmentation polygons on the second canvas
+                segCtx.strokeStyle = "blue";
+                segCtx.fillStyle = "rgba(0, 0, 255, 0.3)";
+                segCtx.lineWidth = 2;
+                data.segmentations.forEach(seg => {
+                    segCtx.beginPath();
+                    const points = seg.points;
+                    segCtx.moveTo(points[0][0], points[0][1]);
+                    points.forEach(([x, y]) => segCtx.lineTo(x, y));
+                    segCtx.closePath();
+                    segCtx.fill();
+                    segCtx.stroke();
+                });
+            };
         }
 
         document.getElementById("upload-form").addEventListener("submit", submitForm);

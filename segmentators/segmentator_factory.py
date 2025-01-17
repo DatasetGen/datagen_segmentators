@@ -6,5 +6,5 @@ segmentators_dict = {
 }
 
 class SegmentatorFactory:
-    def create_from(self, name: str) -> Segmentator:
-        return segmentators_dict[name]()
+    def create_from(self, name: str, model: str) -> Segmentator:
+        return segmentators_dict[name](model=model)
