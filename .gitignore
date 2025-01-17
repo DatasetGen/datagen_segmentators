@@ -1,0 +1,92 @@
+sam*
+*.ipynb
+*.jpg
+*.png
+*.jpeg
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.pyd
+*.pyo
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg
+*.egg-info/
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+.coverage
+*.cover
+*.tox/
+*.nox/
+*.coverage.*
+nosetests.xml
+coverage.xml
+*.hypothesis/
+
+# Pytest
+.cache/
+
+# Flask instance folder
+instance/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# virtualenv
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+
+# mypy
+.mypy_cache/
+
+# Pylint
+.pylint.d/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# pytype
+.pytype/
+
+# VS Code settings
+.vscode/
+
+# Docker
+*.docker
