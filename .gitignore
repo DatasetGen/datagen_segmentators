@@ -1,5 +1,5 @@
-sam*
 *.ipynb
+*.pt
 *.jpg
 *.png
 *.jpeg
