@@ -2,7 +2,7 @@ from abc import abstractmethod, ABC
 from enum import Enum
 
 from pydantic import BaseModel
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 from PIL import Image
 
 
@@ -22,5 +22,5 @@ class Result(BaseModel):
 
 class Segmentator(ABC):
     @abstractmethod
-    def segment(self, image: Image.Image) -> Result:
+    def segment(self, image: Image.Image, bboxes: Optional[list[int]], points: Optional[list[list[int]]]) -> Result:
         ...

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ultralytics import SAM
 from segmentators.segmentator import Segmentator, Result, BoundingBox, Segmentation
 from PIL import Image
@@ -8,12 +10,14 @@ class SAM2Segmentator(Segmentator):
     def __init__(self, model: str="sam2.1_b.pt"):
         self.model = SAM(model)
 
-    def segment(self, image: Image.Image) -> Result:
-        # Convert the PIL image to a numpy array (which the model accepts)
-        image_np = np.array(image)
 
-        # Perform segmentation on the image
-        results = self.model(image_np)
+    def segment(self, image: Image.Image, bboxes: Optional[list[int]], points: Optional[list[list[int]]]) -> Result:
+        image_np = np.array(image)
+        extra_args = {}
+        if bboxes: extra_args["bboxes"] = bboxes
+        if points: extra_args["points"] = points
+        results = self.model(image_np, **extra_args)
+
         bounding_boxes = []
         segmentations = []
 
