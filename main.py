@@ -24,13 +24,15 @@ class RequestBody(BaseModel):
     image : str
     segmentator: Optional[str] = "sam2"
     model : Optional[str] = "sam2_t.pt"
+    bboxes: Optional[list[int]] = []
+    points: Optional[list[list[int]]] = []
 
 @app.post("/segment_image/")
 async def segment(body: RequestBody) -> Result:
     image_data = base64.b64decode(body.image)
     image = Image.open(io.BytesIO(image_data))
     segmentator = SegmentatorFactory().create_from(name=body.segmentator, model=body.model)
-    result = segmentator.segment(image)
+    result = segmentator.segment(image, body.bboxes, body.points)
     return result
 
 @app.get("/")
