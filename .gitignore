@@ -90,3 +90,4 @@ venv.bak/
 
 # Docker
 *.docker
+*.pt
