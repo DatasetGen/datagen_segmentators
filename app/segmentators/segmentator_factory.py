@@ -1,5 +1,5 @@
-from segmentators.sam_2_segmentator import SAM2Segmentator
-from segmentators.segmentator import Segmentator
+from app.segmentators.sam_2_segmentator import SAM2Segmentator
+from app.segmentators.segmentator import Segmentator
 
 segmentators_dict = {
     "sam2" : SAM2Segmentator

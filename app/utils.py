@@ -1,8 +1,8 @@
 from typing import List
-
+import numpy as np
 import cv2
 
-from segmentators.segmentator import BoundingBox, Segmentation
+from app.segmentators.segmentator import BoundingBox, Segmentation
 
 
 def draw_bounding_boxes(image, bounding_boxes: List[BoundingBox]):
@@ -12,7 +12,6 @@ def draw_bounding_boxes(image, bounding_boxes: List[BoundingBox]):
 
 # Function to draw segmentations (polygons) on the image
 def draw_segmentations(image, segmentations: List[Segmentation]):
-    import numpy as np
     for seg in segmentations:
         segmentation_points = [tuple(p) for p in seg.points]
         if len(segmentation_points) > 1:

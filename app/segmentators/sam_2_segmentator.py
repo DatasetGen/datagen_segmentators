@@ -1,7 +1,7 @@
 from typing import Optional
 
 from ultralytics import SAM
-from segmentators.segmentator import Segmentator, Result, BoundingBox, Segmentation
+from app.segmentators.segmentator import Segmentator, Result, BoundingBox, Segmentation
 from PIL import Image
 import numpy as np
 
@@ -9,7 +9,6 @@ import numpy as np
 class SAM2Segmentator(Segmentator):
     def __init__(self, model: str="sam2.1_b.pt"):
         self.model = SAM(model)
-
 
     def segment(self, image: Image.Image, bboxes: Optional[list[int]], points: Optional[list[list[int]]]) -> Result:
         image_np = np.array(image)
