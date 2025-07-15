@@ -9,7 +9,7 @@ Este proyecto forma parte del ecosistema **Datagen**, una plataforma SaaS enfoca
 ## ✨ Funcionalidades
 
 * Subida de imágenes desde la interfaz web.
-* Segmentación automática utilizando distintos motores (SAM, YOLO, etc.).
+* Segmentación automática utilizando distintos motores (Por ahora solo SAM 2).
 * Visualización en tiempo real de:
 
   * **Cajas delimitadoras (Bounding Boxes)**.
