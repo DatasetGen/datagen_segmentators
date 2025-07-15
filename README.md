@@ -1,117 +1,158 @@
-# Datagen Segmentators
+# 🧠 Datagen Segmentators
 
-This project is a web-based tool for image segmentation using different segmentators. Users can upload an image, view segmentation results (bounding boxes and polygons), and interact with the visualized data through a user-friendly interface.
+**Datagen Segmentators** es una herramienta web para segmentación de imágenes que permite a los usuarios subir imágenes, ejecutar diferentes algoritmos segmentadores (como SAM o YOLO), y visualizar resultados como **cajas delimitadoras** (bounding boxes) y **polígonos de segmentación** en una interfaz amigable.
 
----
-
-## Features
-
-- Upload an image for segmentation.
-- Visualize bounding boxes and segmentation polygons on separate canvases.
-- Powered by FastAPI for the backend and a web-based frontend.
-- Supports multiple segmentators (e.g., SAM, YOLO).
+Este proyecto forma parte del ecosistema **Datagen**, una plataforma SaaS enfocada en la **generación, anotación y visualización de datasets para entrenamiento de modelos de machine learning**.
 
 ---
 
-## Installation
+## ✨ Funcionalidades
 
-### Prerequisites
+* Subida de imágenes desde la interfaz web.
+* Segmentación automática utilizando distintos motores (SAM, YOLO, etc.).
+* Visualización en tiempo real de:
 
-- Docker installed on your system.
+  * **Cajas delimitadoras (Bounding Boxes)**.
+  * **Polígonos de segmentación**.
+* Backend basado en **FastAPI**.
+* Frontend web embebido con HTML, CSS y JavaScript.
+* Soporte modular para incorporar nuevos segmentadores fácilmente.
 
-### Steps
+---
 
-1. Clone the repository:
+## 🧰 Requisitos previos
+
+* Tener instalado **Docker**.
+* (Opcional para desarrollo local) Tener **Python 3.10+** y `pip`.
+
+---
+
+## ⚙️ Instalación y ejecución con Docker
+
+1. Clonar el repositorio:
+
    ```bash
    git clone <repository_url>
    cd datagen-segmentators
    ```
 
-2. Build the Docker image:
+2. Construir la imagen Docker:
+
    ```bash
    docker build -t datagen_segmentators .
    ```
 
-3. Run the Docker container:
+3. Ejecutar el contenedor:
+
    ```bash
    docker run -p 8000:8000 datagen_segmentators
    ```
 
-The application will be accessible at `http://localhost:8000`.
+La aplicación estará disponible en `http://localhost:8000`.
 
 ---
 
-## Project Structure
+## 👨‍💻 Uso en desarrollo local (sin Docker)
 
-- **main.py**: Entry point for the FastAPI server.
-- **segmentators/**: Contains the logic for different segmentators.
-- **static/**: Contains frontend files (HTML, CSS, JavaScript).
-- **Dockerfile**: Configuration to containerize the application.
-- **requirements.txt**: Python dependencies.
+1. Crear un entorno virtual:
 
----
-
-## Usage
-
-1. Navigate to `http://localhost:8000` in your web browser.
-2. Upload an image file via the provided form.
-3. View the results:
-   - Bounding boxes visualized on the "Bounding Boxes" canvas.
-   - Segmentation polygons visualized on the "Segmentations" canvas.
-
----
-
-## Development
-
-### Running Locally
-
-1. Create a virtual environment:
    ```bash
    python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   source venv/bin/activate  # En Windows: venv\Scripts\activate
    ```
 
-2. Install dependencies:
+2. Instalar dependencias:
+
    ```bash
    pip install -r requirements.txt
    ```
 
-3. Start the FastAPI server:
+3. Iniciar el servidor FastAPI:
+
    ```bash
    uvicorn main:app --reload
    ```
 
-4. Open `http://127.0.0.1:8000` in your browser.
+4. Acceder a la aplicación:
+
+   ```bash
+   http://127.0.0.1:8000
+   ```
 
 ---
 
-## Troubleshooting
+## 🗂️ Estructura del proyecto
 
-### Error: `libGL.so.1: cannot open shared object file`
+```
+datagen-segmentators/
+│
+├── main.py                  # Punto de entrada del servidor FastAPI
+├── segmentators/            # Lógica de segmentación (SAM, YOLO, etc.)
+├── static/                  # Frontend web (HTML, CSS, JS)
+├── Dockerfile               # Configuración para Docker
+├── requirements.txt         # Dependencias de Python
+└── README.md
+```
 
-This occurs when OpenCV requires OpenGL libraries. Ensure the following dependencies are installed in the Docker image or on your system:
+---
+
+## 🧪 Uso de la herramienta
+
+1. Accede a `http://localhost:8000`.
+2. Sube una imagen en formato `.jpg`, `.png` o similar.
+3. Visualiza los resultados:
+
+   * Cajas delimitadoras en el canvas de **Bounding Boxes**.
+   * Polígonos en el canvas de **Segmentations**.
+
+---
+
+## 🧩 Integración con Datagen
+
+Este servicio se integra con otros componentes del ecosistema Datagen:
+
+| Proyecto                 | Descripción                                                                |
+| ------------------------ | -------------------------------------------------------------------------- |
+| **Datagen Backend**      | API REST para gestión de datasets, imágenes, etiquetas, anotaciones y más. |
+| **Datagen Frontend**     | Interfaz web construida con React + Vite + Tailwind.                       |
+| **Datagen Orchestrator** | CLI para generación automática de datasets a través de pipelines.          |
+| **Datagen Segmentators** | Este proyecto: servicio web de segmentación de imágenes.                   |
+
+---
+
+## 🛠️ Problemas comunes
+
+### ❌ Error: `libGL.so.1: cannot open shared object file`
+
+Este error ocurre cuando OpenCV necesita bibliotecas de OpenGL. Solución en Docker:
+
 ```bash
 apt-get install -y libgl1 libglib2.0-0
 ```
 
-Rebuild the Docker image if necessary.
+Luego reconstruir la imagen:
+
+```bash
+docker build -t datagen_segmentators .
+```
 
 ---
 
+## 🤝 Contribuciones
 
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
-
----
-
-## Acknowledgments
-
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Ultralytics](https://ultralytics.com/) for segmentators.
-- Open-source libraries and contributors.
+¡Las contribuciones son bienvenidas!
+Puedes forquear el repositorio, crear una rama y enviar una Pull Request con tus cambios. Asegúrate de seguir las buenas prácticas y pasar los chequeos de estilo si aplican.
 
 ---
+
+## 🙏 Agradecimientos
+
+* [FastAPI](https://fastapi.tiangolo.com/) – framework backend moderno y asíncrono.
+* [Ultralytics](https://ultralytics.com/) – proveedores de modelos como YOLO.
+* [Segment Anything Model (SAM)](https://segment-anything.com/) – modelo de segmentación avanzada.
+* Comunidad open-source y colaboradores de Datagen.
+
+
 
 ## Contact
 
